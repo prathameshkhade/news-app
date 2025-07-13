@@ -34,6 +34,11 @@ class _HomePageState extends State<HomePage> {
             CartPage.route()
           );
         }
+        else if (state is HomeProductAddedToCartState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Item Added to cart!"))
+          );
+        }
       },
       builder: (context, state) {
         switch(state.runtimeType) {
@@ -66,6 +71,7 @@ class _HomePageState extends State<HomePage> {
                   itemCount: loadedState.products.length,
                   separatorBuilder: (context, index) => const SizedBox(height: 20),
                   itemBuilder: (context, index) => ProductContainer(
+                    homeBloc: homeBloc,
                     product: loadedState.products[index],
                   ),
               ),

@@ -19,3 +19,5 @@ class HomeErrorState extends HomeState{}
 
 // Action states
 class HomeCartButtonNavigateState extends HomeActionState{}
+
+class HomeProductAddedToCartState extends HomeActionState{}

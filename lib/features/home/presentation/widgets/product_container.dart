@@ -2,14 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../data/products_data.dart';
+import '../bloc/home_bloc.dart';
 
 class ProductContainer extends StatelessWidget {
 
   final Product product;
+  final HomeBloc homeBloc;
 
   const ProductContainer({
     super.key,
-    required this.product
+    required this.product,
+    required this.homeBloc
   });
 
   @override
@@ -30,7 +33,12 @@ class ProductContainer extends StatelessWidget {
             contentPadding: EdgeInsets.symmetric(horizontal: 10),
             title: Text(product.name),
             subtitle: Text("\$${product.price}"),
-            trailing: Icon(Icons.add_shopping_cart_outlined),
+            trailing: IconButton(
+                onPressed: () {
+                  homeBloc.add(HomeProductAddToCartBtnPressed(clickedProduct: product));
+                },
+                icon: Icon(Icons.add_shopping_cart_outlined)
+            ),
           )
         ],
       ),
