@@ -20,3 +20,11 @@ class HomeErrorState extends HomeState {
 
   HomeErrorState({required this.failure});
 }
+
+// Actionable events
+/// Navigate to details screen with hero animation
+class HomeNavigateToDetailedScreenWithHeroAnimationActionState extends HomeActionState {
+  final NewsEntity entity;
+
+  HomeNavigateToDetailedScreenWithHeroAnimationActionState({required this.entity});
+}

@@ -14,10 +14,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetAllNewsUseCase newsUseCase;
 
   HomeBloc(this.newsUseCase) : super(HomeInitial()) {
-    on<HomeGetNewsDataEvent>(homeLoadDataEvent);
+    on<HomeGetNewsDataEvent>(onHomeLoadDataEvent);
+    on<HomeNavigateToDetailedScreenWithHeroAnimation>(onHomeNavigateToDetailedScreenWithHeroAnimation);
   }
 
-  FutureOr<void> homeLoadDataEvent(HomeGetNewsDataEvent event, Emitter<HomeState> emit) async {
+  FutureOr<void> onHomeLoadDataEvent(HomeGetNewsDataEvent event, Emitter<HomeState> emit) async {
     emit(HomeLoadingState());
     try {
       final newsList = await newsUseCase.call(null);
@@ -30,5 +31,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       debugPrint('Error in HomeBloc: $e');
       emit(HomeErrorState(failure: Failure(message: e.toString())));
     }
+  }
+
+  FutureOr<void> onHomeNavigateToDetailedScreenWithHeroAnimation(HomeNavigateToDetailedScreenWithHeroAnimation event, Emitter<HomeState> emit) {
+    emit(HomeNavigateToDetailedScreenWithHeroAnimationActionState(entity: event.entity));
   }
 }

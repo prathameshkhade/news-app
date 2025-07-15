@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/common/error_widget.dart';
 import '../../../../core/common/loader.dart';
+import 'details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,7 +33,12 @@ class _HomeScreenState extends State<HomeScreen> {
           buildWhen: (previous, current) => current is! HomeActionState,
           listenWhen: (previous, current) => current is HomeActionState,
           listener: (context, state) {
-            // TODO: implement listener
+            if (state is HomeNavigateToDetailedScreenWithHeroAnimationActionState) {
+              Navigator.push(
+                context,
+                DetailsScreen.route(state.entity),
+              );
+            }
           },
           builder: (context, state) {
             switch(state.runtimeType) {
@@ -50,6 +56,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: list.length,
                   itemBuilder: (context, index) => NewsOverviewTile(
                     news: list[index],
+                    onTap: () {
+                      context.read<HomeBloc>().add(
+                        HomeNavigateToDetailedScreenWithHeroAnimation(entity: list[index])
+                      );
+                    },
                   ),
                 );
               }
