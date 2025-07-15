@@ -1,5 +1,6 @@
 import 'package:amazon/features/show_news/presentation/screens/home_screen.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class NewsApp extends StatelessWidget {
               fontFamily: 'JetBrainsMonoNerd',
               useMaterial3: true,
               colorScheme: darkDynamic ?? ColorScheme.fromSeed(
-                seedColor: Colors.blue,
+                seedColor: CupertinoColors.systemBlue,
                 brightness: Brightness.light,
               ),
             ),
@@ -28,7 +29,7 @@ class NewsApp extends StatelessWidget {
               fontFamily: 'JetBrainsMonoNerd',
               useMaterial3: true,
               colorScheme: darkDynamic ?? ColorScheme.fromSeed(
-                seedColor: Colors.blue,
+                seedColor: CupertinoColors.systemBlue,
                 brightness: Brightness.dark,
               ),
             ),
