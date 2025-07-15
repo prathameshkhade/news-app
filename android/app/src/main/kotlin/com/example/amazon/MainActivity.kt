@@ -1,4 +1,4 @@
-package dev.prathameshkhade.amazon
+package dev.prathameshkhade.news
 
 import io.flutter.embedding.android.FlutterActivity
 

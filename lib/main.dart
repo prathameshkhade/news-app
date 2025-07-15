@@ -1,6 +1,5 @@
 import 'package:amazon/features/show_news/presentation/screens/home_screen.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
