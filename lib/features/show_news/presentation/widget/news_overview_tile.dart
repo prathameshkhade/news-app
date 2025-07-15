@@ -9,6 +9,8 @@ class NewsOverviewTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       child: Column(
@@ -20,26 +22,27 @@ class NewsOverviewTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             child: Image.network(
               news.imageUrl,
-              height: 300,
-              width: 225,
               fit: BoxFit.fill,
             ),
           ),
 
-          // Title and Navigate
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(news.title),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  CupertinoIcons.arrow_up_right,
-                  // color: ,
-                ),
-              )
-            ],
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              news.title,
+              style: theme.textTheme.bodySmall,
+              maxLines: 4,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                CupertinoIcons.arrow_up_right,
+                size: 15,
+                color: theme.colorScheme.primary,
+              ),
+            )
           )
         ],
       ),

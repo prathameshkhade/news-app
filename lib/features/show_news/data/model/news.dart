@@ -18,7 +18,7 @@ class NewsModel extends NewsEntity {
       description: json['description'] ?? '',
       url: json['url'] ?? '',
       imageUrl: json['urlToImage'] ?? '',
-      publishedAt: json['publishedAt'] ?? '',
+      publishedAt: DateTime.parse(json['publishedAt']),
       content: json['content'] ?? '',
     );
   }

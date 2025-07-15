@@ -12,6 +12,8 @@ class ErrWidget extends StatelessWidget {
     final errColor = CupertinoColors.destructiveRed;
     final theme = Theme.of(context);
 
+    final statusCode = failure.statusCode ?? 500;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -19,12 +21,13 @@ class ErrWidget extends StatelessWidget {
       children: <Widget>[
         // Icon with status code
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          spacing: 25,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          spacing: 10,
           children: <Widget>[
             Icon(CupertinoIcons.exclamationmark_bubble, color: errColor),
             Text(
-              failure.statusCode.toString(),
+              statusCode.toString(),
               style: theme.textTheme.titleLarge?.copyWith(color: errColor),
             ),
           ],
@@ -34,6 +37,7 @@ class ErrWidget extends StatelessWidget {
         Text(
           failure.message,
           style: theme.textTheme.titleLarge?.copyWith(color: errColor),
+          textAlign: TextAlign.center,
         ),
       ],
     );
