@@ -1,10 +1,29 @@
+import 'package:amazon/features/show_news/data/datasource/remote_news_api.dart';
+import 'package:amazon/features/show_news/data/repository/news_repository_impl.dart';
+import 'package:amazon/features/show_news/domain/usecase/get_all_news.dart';
+import 'package:amazon/features/show_news/presentation/bloc/home_bloc.dart';
 import 'package:amazon/features/show_news/presentation/screens/home_screen.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(const NewsApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => HomeBloc(
+          GetAllNewsUseCase(
+            newsRepository: NewsRepositoryImpl(
+              newsRemoteDataSource: NewsApiRemoteDataSourceImpl(httpClient: http.Client())
+            )
+          )
+        ))
+      ],
+      child: const NewsApp(),
+    )
+  );
 }
 
 class NewsApp extends StatelessWidget {

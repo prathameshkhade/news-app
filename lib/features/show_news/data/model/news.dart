@@ -1,4 +1,4 @@
-import 'package:amazon/features/show_news/domain/entity/NewsEntity.dart';
+import 'package:amazon/features/show_news/domain/entity/news_entity.dart';
 
 class NewsModel extends NewsEntity {
   NewsModel({

@@ -1,9 +1,9 @@
-import 'package:amazon/features/show_news/data/model/news.dart';
+import 'package:amazon/features/show_news/domain/entity/news_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NewsOverviewTile extends StatelessWidget {
-  final NewsModel news;
+  final NewsEntity news;
 
   const NewsOverviewTile({super.key, required this.news});
 

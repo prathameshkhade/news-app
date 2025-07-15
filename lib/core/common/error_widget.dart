@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../errors/failure.dart';
 
-class ErrorWidget extends StatelessWidget {
+class ErrWidget extends StatelessWidget {
   final Failure failure;
 
-  const ErrorWidget({super.key, required this.failure});
+  const ErrWidget({super.key, required this.failure});
 
   @override
   Widget build(BuildContext context) {

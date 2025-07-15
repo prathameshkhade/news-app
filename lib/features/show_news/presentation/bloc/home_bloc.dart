@@ -1,13 +1,34 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'dart:async';
+
+import 'package:amazon/features/show_news/domain/entity/news_entity.dart';
+import 'package:amazon/features/show_news/domain/usecase/get_all_news.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/errors/failure.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(HomeInitial()) {
-    on<HomeEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+  final GetAllNewsUseCase newsUseCase;
+
+  HomeBloc(this.newsUseCase) : super(HomeInitial()) {
+    on<HomeGetNewsDataEvent>(homeLoadDataEvent);
+  }
+
+  FutureOr<void> homeLoadDataEvent(HomeGetNewsDataEvent event, Emitter<HomeState> emit) async {
+    emit(HomeLoadingState());
+    try {
+      final newsList = await newsUseCase.call(null);
+      newsList.fold(
+        (failure) => emit(HomeErrorState(failure: failure)),
+        (news) => emit(HomeLoadedState(newsList: news)),
+      );
+    }
+    catch(e) {
+      debugPrint('Error in HomeBloc: $e');
+      emit(HomeErrorState(failure: Failure(message: e.toString())));
+    }
   }
 }
