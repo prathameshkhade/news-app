@@ -190,7 +190,7 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
 
       # Download artifacts
       - name: Download Android Artifacts
@@ -220,7 +220,7 @@ jobs:
             android-artifacts/news-v${{ needs.version.outputs.version }}-armeabi-v7a.apk
             android-artifacts/news-v${{ needs.version.outputs.version }}-arm64-v8a.apk
             android-artifacts/news-v${{ needs.version.outputs.version }}-x86_64.apk
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
           tag: ${{ needs.version.outputs.tag }}
           name: Release ${{ needs.version.outputs.tag }}
           body: |
