@@ -1,0 +1,106 @@
+name: "Build & Release"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get Version
+        id: version
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          MAJOR=$(echo $LAST_TAG | cut -d. -f1 | tr -d 'v')
+          MINOR=$(echo $LAST_TAG | cut -d. -f2)
+          PATCH=$(echo $LAST_TAG | cut -d. -f3)
+          NEW_TAG="v$MAJOR.$MINOR.$((PATCH+1))"
+          echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
+          echo "release_name=Release $NEW_TAG" >> $GITHUB_OUTPUT
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.5'
+          channel: 'stable'
+
+      - name: Get Dependencies
+        run: flutter pub get
+
+      - name: Run Tests
+        run: flutter test
+
+      - name: Analyze Code
+        run: flutter analyze
+
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+
+      - name: Build Split APKs
+        run: |
+          flutter build apk --release --split-per-abi
+        env:
+          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PATH: android/app/keystore.jks
+
+      - name: Rename APKs
+        run: |
+          cd build/app/outputs/flutter-apk/
+          mv app-arm64-v8a-release.apk news-arm64-v8a-${{ steps.version.outputs.new_tag }}.apk
+          mv app-armeabi-v7a-release.apk news-armeabi-v7a-${{ steps.version.outputs.new_tag }}.apk
+          mv app-x86_64-release.apk news-x86_64-${{ steps.version.outputs.new_tag }}.apk
+
+      - name: Create Tag
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/news')
+        run: |
+          git tag ${{ steps.version.outputs.new_tag }}
+          git push origin ${{ steps.version.outputs.new_tag }}
+
+      - name: Create Release
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/news')
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.new_tag }}
+          name: ${{ steps.version.outputs.release_name }}
+          body: |
+            Changes in this Release
+            - ${{ github.event.head_commit.message }}
+            
+            APK Files:
+            - news-arm64-v8a: For most modern Android devices
+            - news-armeabi-v7a: For older Android devices
+            - news-x86_64: For Android emulators
+          files: |
+            build/app/outputs/flutter-apk/news-arm64-v8a-${{ steps.version.outputs.new_tag }}.apk
+            build/app/outputs/flutter-apk/news-armeabi-v7a-${{ steps.version.outputs.new_tag }}.apk
+            build/app/outputs/flutter-apk/news-x86_64-${{ steps.version.outputs.new_tag }}.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload APKs as Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-apks
+          path: |
+            build/app/outputs/flutter-apk/news-arm64-v8a-${{ steps.version.outputs.new_tag }}.apk
+            build/app/outputs/flutter-apk/news-armeabi-v7a-${{ steps.version.outputs.new_tag }}.apk
+            build/app/outputs/flutter-apk/news-x86_64-${{ steps.version.outputs.new_tag }}.apk
