@@ -97,7 +97,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload APKs as Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@4
         with:
           name: release-apks
           path: |
