@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:amazon/features/show_news/domain/entity/news_entity.dart';
-import 'package:amazon/features/show_news/domain/usecase/get_all_news.dart';
+import 'package:news/features/show_news/domain/entity/news_entity.dart';
+import 'package:news/features/show_news/domain/usecase/get_all_news.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

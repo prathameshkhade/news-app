@@ -1,5 +1,5 @@
-import 'package:amazon/features/show_news/presentation/bloc/home_bloc.dart';
-import 'package:amazon/features/show_news/presentation/widget/news_overview_tile.dart';
+import 'package:news/features/show_news/presentation/bloc/home_bloc.dart';
+import 'package:news/features/show_news/presentation/widget/news_overview_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

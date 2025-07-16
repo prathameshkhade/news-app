@@ -1,8 +1,8 @@
-import 'package:amazon/features/show_news/data/datasource/remote_news_api.dart';
-import 'package:amazon/features/show_news/data/repository/news_repository_impl.dart';
-import 'package:amazon/features/show_news/domain/usecase/get_all_news.dart';
-import 'package:amazon/features/show_news/presentation/bloc/home_bloc.dart';
-import 'package:amazon/features/show_news/presentation/screens/home_screen.dart';
+import 'package:news/features/show_news/data/datasource/remote_news_api.dart';
+import 'package:news/features/show_news/data/repository/news_repository_impl.dart';
+import 'package:news/features/show_news/domain/usecase/get_all_news.dart';
+import 'package:news/features/show_news/presentation/bloc/home_bloc.dart';
+import 'package:news/features/show_news/presentation/screens/home_screen.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

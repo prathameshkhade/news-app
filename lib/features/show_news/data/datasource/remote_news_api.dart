@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:amazon/core/errors/app_secrets.dart';
-import 'package:amazon/core/errors/failure.dart';
-import 'package:amazon/features/show_news/data/datasource/remote_data_source.dart';
-import 'package:amazon/features/show_news/data/model/news.dart';
+import 'package:news/core/errors/app_secrets.dart';
+import 'package:news/core/errors/failure.dart';
+import 'package:news/features/show_news/data/datasource/remote_data_source.dart';
+import 'package:news/features/show_news/data/model/news.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart' as http;

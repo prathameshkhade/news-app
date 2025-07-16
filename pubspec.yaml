@@ -1,5 +1,5 @@
-name: amazon
-description: "Amazon home page clone to demonstrate the clean architecture and bloc for state management."
+name: news
+description: "news home page clone to demonstrate the clean architecture and bloc for state management."
 publish_to: 'none'
 
 version: 1.0.0+1

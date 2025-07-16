@@ -1,4 +1,4 @@
-# amazon
+# news
 
 A new Flutter project.
 
